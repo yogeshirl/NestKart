@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NestKart - Your Ultimate Shopping Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <meta name="description" content="Best online shopping site for gadgets and accessories.">
+    <meta name="keywords" content="Buy gadgets online, best deals, electronics">
+    <meta name="author" content="NestKart">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🏪 NestKart</div>
+        <div class="search-container">
+            <input type="text" id="search-bar" class="search-input" placeholder="🔍 Search products..." onkeyup="searchProducts()">
+            <ul class="suggestions" id="suggestions"></ul>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#cart-popup">Cart</a></li>
+            <li><a href="#contact-popup">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Welcome to <span class="highlight">NestKart</span></h1>
+        <p>Your One-Stop Destination for Best Deals!</p>
+        <a href="#products" class="shop-now-btn">Explore Now</a>
+    </header>
+
+    <section id="products" class="products">
+        <h2>Our Best Sellers</h2>
+        <div class="product-grid">
+            <div class="product">
+                <img src="https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2016/05/1-1.jpg?ssl=1&quality=80&w=f" alt="Smartphone">
+                <h3>Smartphone</h3>
+                <p>Price: ₹9,999</p>
+                <button class="add-to-cart" onclick="addToCart('Smartphone', 9999)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://m.media-amazon.com/images/I/71pz2njkNRL._SL1500_.jpg" alt="Headphones">
+                <h3>Wireless Headphones</h3>
+                <p>Price: ₹1,499</p>
+                <button class="add-to-cart" onclick="addToCart('Wireless Headphones', 1499)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://m.media-amazon.com/images/I/61Y8u2y5XOL._SL1500_.jpg" alt="Smartwatch">
+                <h3>Smartwatch</h3>
+                <p>Price: ₹2,999</p>
+                <button class="add-to-cart" onclick="addToCart('Smartwatch', 2999)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS4eScbjx_jVAFip1_hcWwj17ed8z2X2_4mYUeUa6XXcNEKCSB5wrNVDbVMj-_Y3fTW0zsePBWfB6x6i_en2JFxAuud8eVN6fNo5vTIw5tBtqA6HD5lDtmsaQ&usqp=CAE" alt="Laptop">
+                <h3>Laptop</h3>
+                <p>Price: ₹45,999</p>
+                <button class="add-to-cart" onclick="addToCart('Laptop', 45999)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="popup" id="cart-popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('cart-popup')">&times;</span>
+            <h2>🛒 Your Shopping Cart</h2>
+            <ul id="cart-list"></ul>
+            <p>Total: ₹<span id="total-price">0</span></p>
+        </div>
+    </div>
+
+    <button id="dark-mode-toggle" class="dark-mode-btn">🌙 Dark Mode</button>
+
+    <p>Stock: <span id="stock-count">10</span> left!</p>
+
+    <script>
+        // JavaScript to toggle dark mode
+        document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            darkModeToggle.textContent = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+        });
+
+        // Backend API Call
+        fetch("http://localhost:5000/api/data")
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error("Error:", error));
+    </script>
+
+    <footer>
+        <p>© 2025 NestKart | Built by <strong>Yogesh Salunke</strong> 🚀</p>
+    </footer>
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const darkModeToggle = document.getElementById("dark-mode-toggle");
+        const body = document.body;
+
+        darkModeToggle.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+
+            if (body.classList.contains("dark-mode")) {
+                darkModeToggle.textContent = "☀️ Light Mode";
+            } else {
+                darkModeToggle.textContent = "🌙 Dark Mode";
+            }
+        });
+
+        console.log("Dark mode script loaded successfully!"); // Debugging
+    });
+</script>
