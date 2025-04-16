@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - NestKart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">🏠 Home</a>
+    </nav>
+
+    <div id="product-container" class="product-details">
+        <img id="product-image" src="" alt="Product Image">
+        <h1 id="product-name">Loading...</h1>
+        <p id="product-price"></p>
+        <p id="product-description"></p>
+
+        <h3>Specifications:</h3>
+        <div id="product-specs"></div>
+
+        <button class="button" onclick="addToCart()">🛒 Add to Cart</button>
+        <button class="button buy-now" onclick="buyNow()">⚡ Buy Now</button>
+
+        <h3>Customer Reviews:</h3>
+        <textarea id="review-box" placeholder="Write your review..."></textarea>
+        <button class="button" onclick="submitReview()">Submit Review</button>
+        <ul id="reviews-list"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productName = urlParams.get("name");
+            const productPrice = urlParams.get("price");
+
+            if (productName && productPrice) {
+                document.getElementById("product-name").innerText = productName;
+                document.getElementById("product-price").innerText = `Price: ₹${productPrice}`;
+                document.getElementById("product-image").src = getProductImage(productName);
+                document.getElementById("product-description").innerText = getProductDescription(productName);
+                document.getElementById("product-specs").innerHTML = getProductSpecs(productName);
+            } else {
+                document.getElementById("product-container").innerHTML = "<h2>Product Not Found!</h2>";
+            }
+        });
+
+        function getProductImage(productName) {
+            const images = {
+                "Smartphone": "https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2016/05/1-1.jpg?ssl=1&quality=80&w=f",
+                "Wireless Headphones": "https://m.media-amazon.com/images/I/71pz2njkNRL._SL1500_.jpg",
+                "Smartwatch": "https://m.media-amazon.com/images/I/61Y8u2y5XOL._SL1500_.jpg",
+                "Laptop": "https://m.media-amazon.com/images/I/81vDZyJQ-LL._SL1500_.jpg"
+            };
+            return images[productName] || "https://via.placeholder.com/150"; // ✅ Default image if missing
+        }
+
+        function getProductDescription(productName) {
+            const descriptions = {
+                "Smartphone": "High-resolution display, fast processor, and long battery life.",
+                "Wireless Headphones": "Deep bass, long battery backup, and active noise cancellation.",
+                "Smartwatch": "Track fitness, notifications, and water-resistant design.",
+                "Laptop": "Powerful Intel Core i7 processor, 16GB RAM, 512GB SSD, and Full HD display."
+            };
+            return descriptions[productName] || "No description available.";
+        }
+
+        function getProductSpecs(productName) {
+            const specs = {
+                "Smartphone": "<ul><li>Processor: Snapdragon 8 Gen 2</li><li>RAM: 8GB</li><li>Storage: 128GB</li><li>Camera: 50MP + 12MP</li><li>Battery: 5000mAh</li></ul>",
+                "Wireless Headphones": "<ul><li>Battery Life: 40 hours</li><li>Bluetooth: 5.1</li><li>Noise Cancellation: Yes</li></ul>",
+                "Smartwatch": "<ul><li>Screen Size: 1.5 inches</li><li>Battery: 7 days backup</li><li>Waterproof: Yes</li></ul>",
+                "Laptop": "<ul><li>Processor: Intel Core i7 12th Gen</li><li>RAM: 16GB</li><li>Storage: 512GB SSD</li><li>Display: 15.6-inch Full HD</li><li>Battery Life: 10 hours</li></ul>"
+            };
+            return specs[productName] || "<p>Specifications not available.</p>";
+        }
+
+        function buyNow() {
+            window.location.href = "checkout.html";
+        }
+
+        function submitReview() {
+            const reviewText = document.getElementById("review-box").value;
+            if (reviewText.trim() !== "") {
+                let li = document.createElement("li");
+                li.innerText = reviewText;
+                document.getElementById("reviews-list").appendChild(li);
+                document.getElementById("review-box").value = ""; // Reset input
+            }
+        }
+    </script>
+</body>
+</html>
